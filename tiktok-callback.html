@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TikTok 連携 | モモとユキ</title>
+<style>
+:root{--bg:#fff7ef;--fg:#3b2a20;--card:#fff;--accent:#e8743b;--muted:#8a7565}
+@media (prefers-color-scheme:dark){:root{--bg:#1d1612;--fg:#f4e9df;--card:#2a201a;--muted:#b9a695}}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:system-ui,-apple-system,"Hiragino Sans","Noto Sans JP",sans-serif;display:grid;place-items:center;min-height:100vh;padding:16px;box-sizing:border-box}
+.card{background:var(--card);border-radius:16px;padding:24px;max-width:560px;width:100%;box-shadow:0 6px 24px rgba(0,0,0,.08)}
+h1{font-size:20px;margin:0 0 8px}p{color:var(--muted);line-height:1.6}
+code{display:block;word-break:break-all;background:rgba(232,116,59,.1);padding:12px;border-radius:8px;font-size:14px;margin:12px 0}
+button{background:var(--accent);color:#fff;border:0;border-radius:999px;padding:10px 20px;font-size:15px;cursor:pointer}
+</style></head><body><div class="card">
+<h1 id="h">TikTok 連携</h1><p id="msg">読み込み中…</p><code id="code" hidden></code>
+<button id="copy" hidden>コードをコピー</button>
+</div>
+<script>
+const q=new URLSearchParams(location.search), code=q.get('code'), err=q.get('error');
+const msg=document.getElementById('msg'), box=document.getElementById('code'), btn=document.getElementById('copy');
+if(code){document.getElementById('h').textContent='許可ありがとうございます';msg.textContent='下の認可コードを、GitHub の「TikTok の合鍵を登録」に貼り付けてください（有効期限は数分です）。';box.textContent=code;box.hidden=false;btn.hidden=false;
+btn.onclick=async()=>{try{await navigator.clipboard.writeText(code);btn.textContent='コピーしました'}catch(e){btn.textContent='手動でコピーしてください'}}}
+else if(err){msg.textContent='連携がキャンセルされたか、エラーが起きました：'+err+' '+(q.get('error_description')||'')}
+else{msg.textContent='このページは「モモとユキ」の動画投稿ツールと TikTok を連携するためのものです。'}
+</script></body></html>
